@@ -37,11 +37,11 @@ app.get('/api/hotel/:hotelId', (req, res) => {
   })
 })
 
-app.post('/api/pictures', (req, res) => {
+app.get('/api/pictures/:hotel', (req, res) => {
+  var hotel = req.params.hotel
   axios({
-    method: "POST",
-    url: 'http://localhost:4000/api/pictures',
-    data: { hotel:  req.body.hotel}
+    method: "GET",
+    url: `http://localhost:4000/api/pictures/${hotel}`,
   })
   .then((results) => {
     res.send(results.data)
