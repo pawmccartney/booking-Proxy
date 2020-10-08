@@ -11,10 +11,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
-app.get('/api/low-days/0', (req, res) => {
+app.get('/api/low-days/:id', (req, res) => {
   axios({
     method: "GET",
-    url: 'http://localhost:4002/api/low-days/0'
+    url: `http://localhost:4002/api/low-days/${req.params.id}`
   })
   .then((result) => {
     res.send(result.data)
