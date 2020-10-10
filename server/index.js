@@ -10,6 +10,21 @@ app.use(express.static(path.join(__dirname, '../dist')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 
+app.get('/:hotelName', (req, res) => {
+  const fileName = 'index.html';
+  const options = {
+    root: path.join(__dirname, '../dist')
+  };
+  res.sendFile(fileName, options, (err) => {
+    if(err) {
+      console.error(err);
+      return;
+    } else {
+      console.log('success')
+      return;
+    }
+  })
+})
 
 app.get('/api/low-days/:id', (req, res) => {
   axios({
@@ -51,10 +66,11 @@ app.get('/api/pictures/:hotel', (req, res) => {
   })
 })
 
-app.get('/reviews', (req, res) => {
+app.get('/hotel/:hotel', (req, res) => {
+  let hotel = req.params.hotel === 'root'? 'hotel0': req.params.hotel;
   axios({
     method: "GET",
-    url: `http://localhost:4003/reviews`
+    url: `http://localhost:4003/hotel/${hotel}`
   })
   .then((results) => {
     res.send(results.data)
